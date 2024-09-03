@@ -61,12 +61,12 @@
 
 - name: Ensure config directory exists
   file:
-    path: "/users/{{ emulab_swapper }}/.config/srsran"
+    path: "{{ ansible_user_dir }}/.config/srsran"
     state: directory
-    owner: "{{ emulab_swapper }}"
+    owner: "{{ ansible_user_id }}"
 
 - name: Copy gNB config file
   copy:
     src: templates/gnb.yml
-    dest: "/users/{{ emulab_swapper }}/.config/srsran/gnb.yml"
-    owner: "{{ emulab_swapper }}"
+    dest: "{{ ansible_user_dir }}/.config/srsran/gnb.yml"
+    owner: "{{ ansible_user_id }}"

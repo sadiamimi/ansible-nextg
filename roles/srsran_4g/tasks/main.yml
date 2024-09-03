@@ -67,7 +67,7 @@
 
 - name: Install srsRAN 4G configs
   become: true
-  become_user: "{{ emulab_swapper }}"
+  become_user: "{{ ansible_user_id }}"
   command:
     cmd: sudo srsran_install_configs.sh user
   register: srsran_4g_install_cfg
@@ -77,13 +77,13 @@
 
 - name: Ensure config permissions
   file:
-    path: "/users/{{ emulab_swapper }}/.config/srsran"
+    path: "{{ ansible_user_dir }}/.config/srsran"
     state: directory
     recurse: yes
-    owner: "{{ emulab_swapper }}"
+    owner: "{{ ansible_user_id }}"
 
 - name: Copy UE config file
   copy:
     src: templates/ue.conf
-    dest: "/users/{{ emulab_swapper }}/.config/srsran/ue.conf"
-    owner: "{{ emulab_swapper }}"
+    dest: "{{ ansible_user_dir }}/.config/srsran/ue.conf"
+    owner: "{{ ansible_user_id }}"
