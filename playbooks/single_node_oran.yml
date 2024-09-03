@@ -1,0 +1,6 @@
+- name: Single-node srsRAN OSC RIC installation
+  hosts: localhost
+  roles:
+    - srs_oran_sc_ric
+    - srsran_project
+    - srsran_4g

@@ -1,0 +1,13 @@
+namespace: dustinmaas
+name: nextg_utils
+version: 0.1.0
+readme: README.md
+authors:
+- Dustin Maas <dmaas@cs.utah.edu>
+description: >-
+  A collection useful ansible for deploying nextg systems.
+license:
+- AGPL-3.0-only
+license_file: LICENSE
+tags: [ "nextg" ]
+repository: https://gitlab.flux.utah.edu/dmaas/ansible-nextg
