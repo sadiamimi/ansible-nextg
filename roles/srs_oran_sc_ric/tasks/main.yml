@@ -11,7 +11,7 @@
 
 - name: Build necessary containers
   command:
-    cmd: docker-compose build
+    cmd: docker compose build
     chdir: "{{ srs_oran_sc_ric_dir }}"
   register: srs_oran_sc_ric_build
 
