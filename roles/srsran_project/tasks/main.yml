@@ -61,12 +61,16 @@
 
 - name: Ensure config directory exists
   file:
-    path: "{{ ansible_user_dir }}/.config/srsran"
+    path: /etc/srsran
     state: directory
-    owner: "{{ ansible_user_id }}"
 
 - name: Copy gNB config file
   copy:
     src: templates/gnb.yml
-    dest: "{{ ansible_user_dir }}/.config/srsran/gnb.yml"
-    owner: "{{ ansible_user_id }}"
+    dest: /etc/srsran/gnb.yml
+
+- name: Build srsRAN_Project 5gc docker image
+  command:
+    cmd: docker compose build 5gc
+    chdir: "{{ srsran_project_dir }}/docker"
+  when: srsran_project_build_5gc

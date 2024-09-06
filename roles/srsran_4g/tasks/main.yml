@@ -69,21 +69,20 @@
   become: true
   become_user: "{{ ansible_user_id }}"
   command:
-    cmd: sudo srsran_install_configs.sh user
+    cmd: sudo srsran_install_configs.sh service
   register: srsran_4g_install_cfg
 
 - debug:
     var: "{{ srsran_4g_install_cfg.stdout_lines }}"
 
-- name: Ensure config permissions
-  file:
-    path: "{{ ansible_user_dir }}/.config/srsran"
-    state: directory
-    recurse: yes
-    owner: "{{ ansible_user_id }}"
+# - name: Ensure config permissions
+#   file:
+#     path: "{{ ansible_user_dir }}/.config/srsran"
+#     state: directory
+#     recurse: yes
+#     owner: "{{ ansible_user_id }}"
 
 - name: Copy UE config file
   copy:
     src: templates/ue.conf
-    dest: "{{ ansible_user_dir }}/.config/srsran/ue.conf"
-    owner: "{{ ansible_user_id }}"
+    dest: /etc/srsran/ue.conf
