@@ -38,14 +38,14 @@
     src: "{{ item }}"
     dest: "{{ quectel_ue_tools_dir }}/{{ item | basename }}"
     mode: 0755
-    with_fileglob:
+  with_fileglob:
     - "templates/python/*.py"
 
 - name: copy ue services
   ansible.builtin.template:
     src: "{{ item }}"
     dest: "{{ quectel_ue_services_dir }}/{{ item | basename }}"
-    with_fileglob:
+  with_fileglob:
     - "templates/services/*.service"
 
 - name: reload systemd daemon
