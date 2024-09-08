@@ -60,10 +60,10 @@
   when: quectel_ue_enable_service_gps
 
 - name: enable quectel control service
-    ansible.builtin.systemd:
-      name: quectel-control.service
-      enabled: yes
-      state: started
+  ansible.builtin.systemd:
+    name: quectel-control.service
+    enabled: yes
+    state: started
   when: quectel_ue_enable_service_control
 
 - name: enable quectel connection manager service
