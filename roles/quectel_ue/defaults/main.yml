@@ -1,0 +1,8 @@
+quectel_ue_tools_dir: /opt/ue-tools
+quectel_ue_services_dir: /etc/systemd/system
+
+quectel_ue_dnn: internet
+quectel_ue_enable_service_gps: false
+quectel_ue_enable_service_control: true
+quectel_ue_enable_service_cm: true
+quectel_ue_enable_service_metrics: false

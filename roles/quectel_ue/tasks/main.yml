@@ -1,0 +1,81 @@
+- name: install UE tools dependencies
+    ansible.builtin.apt:
+    name:
+        - gpsd-clients
+        - iperf3
+        - python3-pip
+        - python3-zmq
+        - python3-virtualenv
+        - python3-setuptools
+        - iperf3
+
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: install python requirements
+    ansible.builtin.pip:
+    name:
+        - gps==3.22
+        - pyserial==3.5
+        - pyzmq==22.3.0
+        - textual==0.32.0
+
+- name: update udhcpc script
+    ansible.builtin.template:
+    src: templates/udhcpc/default.script
+    dest: /etc/udhcpc/default.script
+    mode: 0755
+
+- name: create ue tools directory
+    ansible.builtin.file:
+    path: "{{ quectel_ue_tools_dir }}"
+    state: directory
+    mode: 0755
+
+- name: copy python scripts
+    ansible.builtin.template:
+    src: "{{ item }}"
+    dest: "{{ quectel_ue_tools_dir }}/{{ item | basename }}"
+    mode: 0755
+    with_fileglob:
+    - "templates/python/*.py"
+
+- name: copy ue services
+    ansible.builtin.template:
+    src: "{{ item }}"
+    dest: "{{ quectel_ue_services_dir }}/{{ item | basename }}"
+    with_fileglob:
+    - "templates/services/*.service"
+
+- name: reload systemd daemon
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: enable gps service
+    ansible.builtin.systemd:
+      name: qpsd-client.service
+      enabled: yes
+      state: started
+    when: quectel_ue_enable_service_gps
+
+- name: enable quectel control service
+    ansible.builtin.systemd:
+      name: quectel-control.service
+      enabled: yes
+      state: started
+    when: quectel_ue_enable_service_control
+
+- name: enable quectel connection manager service
+    ansible.builtin.systemd:
+      name: quectel-cm.service
+      enabled: yes
+      state: started
+    when: quectel_ue_enable_service_cm
+
+- name: enable quectel ue metrics service
+    ansible.builtin.systemd:
+      name: ue-metrics.service
+      enabled: yes
+      state: started
+    when: quectel_ue_enable_service_metrics
