@@ -1,5 +1,5 @@
 - name: install UE tools dependencies
-    ansible.builtin.apt:
+  ansible.builtin.apt:
     name:
         - gpsd-clients
         - iperf3
@@ -14,7 +14,7 @@
     cache_valid_time: 3600
 
 - name: install python requirements
-    ansible.builtin.pip:
+  ansible.builtin.pip:
     name:
         - gps==3.22
         - pyserial==3.5
@@ -22,19 +22,19 @@
         - textual==0.32.0
 
 - name: update udhcpc script
-    ansible.builtin.template:
+  ansible.builtin.template:
     src: templates/udhcpc/default.script
     dest: /etc/udhcpc/default.script
     mode: 0755
 
 - name: create ue tools directory
-    ansible.builtin.file:
+  ansible.builtin.file:
     path: "{{ quectel_ue_tools_dir }}"
     state: directory
     mode: 0755
 
 - name: copy python scripts
-    ansible.builtin.template:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "{{ quectel_ue_tools_dir }}/{{ item | basename }}"
     mode: 0755
@@ -42,7 +42,7 @@
     - "templates/python/*.py"
 
 - name: copy ue services
-    ansible.builtin.template:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "{{ quectel_ue_services_dir }}/{{ item | basename }}"
     with_fileglob:
@@ -53,29 +53,29 @@
     daemon_reload: true
 
 - name: enable gps service
-    ansible.builtin.systemd:
-      name: qpsd-client.service
-      enabled: yes
-      state: started
-    when: quectel_ue_enable_service_gps
+  ansible.builtin.systemd:
+    name: qpsd-client.service
+    enabled: yes
+    state: started
+  when: quectel_ue_enable_service_gps
 
 - name: enable quectel control service
     ansible.builtin.systemd:
       name: quectel-control.service
       enabled: yes
       state: started
-    when: quectel_ue_enable_service_control
+  when: quectel_ue_enable_service_control
 
 - name: enable quectel connection manager service
-    ansible.builtin.systemd:
-      name: quectel-cm.service
-      enabled: yes
-      state: started
-    when: quectel_ue_enable_service_cm
+  ansible.builtin.systemd:
+    name: quectel-cm.service
+    enabled: yes
+    state: started
+  when: quectel_ue_enable_service_cm
 
 - name: enable quectel ue metrics service
-    ansible.builtin.systemd:
-      name: ue-metrics.service
-      enabled: yes
-      state: started
-    when: quectel_ue_enable_service_metrics
+  ansible.builtin.systemd:
+    name: ue-metrics.service
+    enabled: yes
+    state: started
+  when: quectel_ue_enable_service_metrics
