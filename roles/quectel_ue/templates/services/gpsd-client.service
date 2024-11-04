@@ -1,5 +1,5 @@
 [Unit]
-Description=GPSD client service
+Description=GPSD Client
 After=network.target
 
 [Service]
