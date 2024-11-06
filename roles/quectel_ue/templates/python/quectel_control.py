@@ -171,8 +171,23 @@ if __name__ == "__main__":
             print(f"Invalid command {command}")
             print(usage)
             sys.exit(1)
-        response = run_command(command)
-        print(response.decode())
+        qcc = QuectelControlClient()
+        if command == "up":
+            print(qcc.up())
+        elif command == "down":
+            print(qcc.down())
+        elif command == "airplane":
+            print(qcc.airplane())
+        elif command == "status":
+            print(qcc.status())
+        elif command == "imsi":
+            print(qcc.imsi())
+        elif command == "servingcell":
+            print(qcc.servingcell())
+        elif command == "scan":
+            print(qcc.scan())
+        elif command == "hello":
+            print(qcc.hello())
     else:
         ue = QuectelControlServer()
         ue.run()
