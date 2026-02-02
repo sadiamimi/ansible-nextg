@@ -1,7 +1,7 @@
 
 srsran_project_dir: /opt/srsRAN_Project
-srsran_project_repo: https://github.com/srsran/srsRAN_Project.git
-srsran_project_hash: release_24_10
+srsran_project_repo: https://github.com/sadiamimi/srsRAN_Project.git
+srsran_project_hash: main
 
 srsran_project_build_5gc: false
 
